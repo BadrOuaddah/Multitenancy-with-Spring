@@ -1,13 +1,13 @@
-package com.example.multitenantcy_keycloak;
+package com.example.multitenancy_keycloak;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MultitenantcyKeycloakApplication {
+public class MultitenancyKeycloakApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MultitenantcyKeycloakApplication.class, args);
+		SpringApplication.run(MultitenancyKeycloakApplication.class, args);
 	}
 
 }
