@@ -1,0 +1,2 @@
+CREATE DATABASE db_tenant1;
+CREATE DATABASE db_tenant2;
