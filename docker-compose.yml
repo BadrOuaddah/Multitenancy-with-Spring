@@ -25,7 +25,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: start-dev
+    command:
+      - start-dev
+      - --import-realm
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -35,3 +37,9 @@ services:
       KC_DB_PASSWORD: postgres
     ports:
       - "8080:8080"
+    volumes:
+      - ./keycloak-import:/opt/keycloak/data/import
+      - keycloak_data:/opt/keycloak/data
+
+volumes:
+  keycloak_data:

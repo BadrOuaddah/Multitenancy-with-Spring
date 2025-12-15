@@ -1,0 +1,18 @@
+{
+  "realm": "tenant2",
+  "enabled": true,
+
+  "clients": [
+    {
+      "clientId": "spring-client",
+      "name": "Spring Boot Client",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "spring-secret",
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": false
+    }
+  ]
+}
