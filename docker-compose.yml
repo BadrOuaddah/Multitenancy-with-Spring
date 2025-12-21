@@ -20,7 +20,7 @@ services:
       retries: 5
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: keycloak/keycloak
     container_name: mt-keycloak
     depends_on:
       postgres:
