@@ -34,10 +34,16 @@ class MultitenancyKeycloakApplicationTests {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private void cleanTenant(String tenant) {
+        TenantContext.setTenant(tenant);
+        productRepository.deleteAll();
+        TenantContext.clear();
+    }
+
     @AfterEach
     void cleanup() {
-        TenantContext.clear();
-        productRepository.deleteAll();
+        cleanTenant("tenant1");
+        cleanTenant("tenant2");
     }
 
     @Test
@@ -74,6 +80,7 @@ class MultitenancyKeycloakApplicationTests {
         String url = jdbcTemplate.execute((ConnectionCallback<String>) (conn) -> conn.getMetaData().getURL());
         System.out.println("Tenant2 datasource URL: " + url);
         assertThat(url).contains("db_tenant2");
+
         ProductEntity product = new ProductEntity("Phone");
         productRepository.save(product);
 
