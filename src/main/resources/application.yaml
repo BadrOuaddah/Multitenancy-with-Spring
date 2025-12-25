@@ -12,3 +12,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+security:
+  hashing:
+    global-salt: "global-app-salt"
+    tenant-salts:
+      tenant1: "tenant1-salt"
+      tenant2: "tenant2-salt"
