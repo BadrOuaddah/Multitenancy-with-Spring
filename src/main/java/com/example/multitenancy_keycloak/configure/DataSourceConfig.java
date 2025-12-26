@@ -1,6 +1,7 @@
 package com.example.multitenancy_keycloak.configure;
 
 import com.example.multitenancy_keycloak.tenant.TenantContext;
+import com.example.multitenancy_keycloak.tenant.TenantIdHasher;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,19 +14,26 @@ import java.util.Map;
 @Configuration
 public class DataSourceConfig {
 
+    private final TenantIdHasher tenantIdHasher;
+
+    public DataSourceConfig(TenantIdHasher tenantIdHasher) {
+        this.tenantIdHasher = tenantIdHasher;
+    }
+
     @Bean
     public DataSource dataSource() {
 
         Map<Object, Object> targetDataSources = new HashMap<>();
 
-        targetDataSources.put("tenant1", createDataSource("db_tenant1"));
-        targetDataSources.put("tenant2", createDataSource("db_tenant2"));
+        targetDataSources.put(tenantIdHasher.hashTenantId("tenant1"), createDataSource("db_tenant1"));
+        targetDataSources.put(tenantIdHasher.hashTenantId("tenant2"), createDataSource("db_tenant2"));
 
         AbstractRoutingDataSource routingDataSource =
                 new AbstractRoutingDataSource() {
                     @Override
                     protected Object determineCurrentLookupKey() {
-                        return TenantContext.getTenant();
+                        String tenant = TenantContext.getTenant();
+                        return tenantIdHasher.hashTenantId(tenant);
                     }
                 };
 
